@@ -13,8 +13,8 @@
     }
 
     .hero {
-      background: linear-gradient(to right, #ffcccb, #ffe4e1);
-      color: #111;
+      background: linear-gradient(to right, #8e44ad, #c0392b);
+      color: white;
       text-align: center;
       padding: 100px 20px;
     }
@@ -33,15 +33,15 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      padding: 60px 40px;
+      padding: 40px;
       gap: 40px;
       background-color: #fff;
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.6s ease-out;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
     }
 
-    .main-section.visible {
+    .main-section.show {
       opacity: 1;
       transform: translateY(0);
     }
@@ -56,28 +56,12 @@
       max-width: 90%;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: all 0.6s ease-out;
-    }
-
-    .main-section.visible img {
-      opacity: 1;
-      transform: translateX(0);
     }
 
     .description {
       max-width: 500px;
       font-size: 1.2em;
       line-height: 1.6;
-      opacity: 0;
-      transform: translateX(40px);
-      transition: all 0.6s ease-out;
-    }
-
-    .main-section.visible .description {
-      opacity: 1;
-      transform: translateX(0);
     }
 
     .description h2 {
@@ -101,7 +85,7 @@
     }
 
     .menu button {
-      font-size: 28px;
+      font-size: 30px;
       background: none;
       border: none;
       color: black;
@@ -111,28 +95,33 @@
     .sidebar {
       position: fixed;
       top: 0;
-      left: -250px;
+      left: -270px;
       width: 250px;
       height: 100%;
-      background-color: #fff;
+      background-color: #ffffff;
       color: #333;
-      padding: 30px 20px;
+      padding: 60px 20px 20px;
       z-index: 1000;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
       transition: left 0.3s ease;
+    }
+
+    .sidebar.show-sidebar {
+      left: 0;
     }
 
     .sidebar a {
       display: block;
       color: #333;
       text-decoration: none;
-      margin: 20px 0;
+      margin: 25px 0;
       font-size: 1.3em;
       font-weight: bold;
+      transition: color 0.3s;
     }
 
-    .sidebar.show-sidebar {
-      left: 0;
+    .sidebar a:hover {
+      color: #c0392b;
     }
 
     .close-btn {
@@ -141,9 +130,14 @@
       color: #333;
       font-size: 28px;
       position: absolute;
-      top: 10px;
+      top: 15px;
       right: 15px;
       cursor: pointer;
+      display: none;
+    }
+
+    .sidebar.show-sidebar .close-btn {
+      display: block;
     }
 
     @media (max-width: 768px) {
@@ -160,22 +154,26 @@
 </head>
 <body>
 
+  <!-- Menu Toggle Button -->
   <div class="menu">
     <button onclick="toggleSidebar()">☰</button>
   </div>
 
+  <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
-    <button id="closeSidebar" class="close-btn">✕</button>
-    <a href="#">About Me</a>
-    <a href="#">More Books</a>
-    <a href="#">Scholars</a>
+    <button class="close-btn" onclick="toggleSidebar()">✕</button>
+    <a href="#">📖 About Me</a>
+    <a href="#">📚 More Books</a>
+    <a href="#">🎓 Scholars</a>
   </div>
 
+  <!-- Hero Section -->
   <section class="hero">
     <h1>Knowledge Seeker</h1>
     <p>For those who seek truth through learning.</p>
   </section>
 
+  <!-- Book 1 -->
   <section class="main-section">
     <img src="power.png" alt="Infinite Powers Book">
     <div class="description">
@@ -187,6 +185,7 @@
     </div>
   </section>
 
+  <!-- Book 2 -->
   <section class="main-section alt-section">
     <div class="description">
       <h2>The Joy of x</h2>
@@ -197,53 +196,42 @@
     <img src="joy.png" alt="The Joy of x Book">
   </section>
 
+  <!-- Book 3 -->
   <section class="main-section">
     <img src="truth.png" alt="The Truth Detective Book">
     <div class="description">
       <h2>The Truth Detective</h2>
       <p>
-        Tim Harford masterfully shows how statistical thinking and data can help uncover truth in a world of misinformation. A must-read for those who want to think clearly and critically about the world.
+        An engaging book that explores how data can be used to find the truth in a world full of misinformation. A must-read for the modern critical thinker.
       </p>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     &copy; 2025 Knowledge Seeker. All rights reserved.
   </footer>
 
+  <!-- Script -->
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const closeBtn = document.getElementById('closeSidebar');
-
     function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('show-sidebar');
     }
 
-    closeBtn.addEventListener('click', () => {
-      sidebar.classList.remove('show-sidebar');
-    });
-
-    document.querySelectorAll('#sidebar a').forEach(link => {
-      link.addEventListener('click', () => {
-        sidebar.classList.remove('show-sidebar');
-      });
-    });
-
-    // Scroll-based animation
-    function revealOnScroll() {
-      const sections = document.querySelectorAll('.main-section');
-      const triggerBottom = window.innerHeight * 0.85;
-
-      sections.forEach(section => {
-        const boxTop = section.getBoundingClientRect().top;
-        if (boxTop < triggerBottom) {
-          section.classList.add('visible');
+    // Animate sections on scroll
+    const sections = document.querySelectorAll('.main-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
         }
       });
-    }
+    }, { threshold: 0.1 });
 
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
+    sections.forEach(section => {
+      observer.observe(section);
+    });
   </script>
 
 </body>
