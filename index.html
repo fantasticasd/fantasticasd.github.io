@@ -12,8 +12,8 @@
     }
 
     .hero {
-      background: linear-gradient(to right, #8e44ad, #c0392b);
-      color: white;
+      background: linear-gradient(to right, #ffcccb, #ffe4e1); /* New light red-pink gradient */
+      color: #111;
       text-align: center;
       padding: 100px 20px;
     }
@@ -72,13 +72,14 @@
       position: absolute;
       top: 20px;
       left: 20px;
+      z-index: 1100;
     }
 
     .menu button {
       font-size: 24px;
       background: none;
       border: none;
-      color: white;
+      color: black;
       cursor: pointer;
     }
 
@@ -89,17 +90,30 @@
       left: 0;
       width: 250px;
       height: 100%;
-      background-color: #333;
-      color: white;
+      background-color: #fff; /* White background */
+      color: #333;
       padding: 20px;
       z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
     }
 
     .sidebar a {
       display: block;
-      color: white;
+      color: #333;
       text-decoration: none;
       margin: 10px 0;
+      font-weight: bold;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #333;
+      font-size: 28px;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
     }
 
     .show-sidebar {
@@ -125,6 +139,7 @@
   </div>
 
   <div id="sidebar" class="sidebar">
+    <button id="closeSidebar" class="close-btn">✕</button>
     <a href="#">About Me</a>
     <a href="#">More Books</a>
     <a href="#">Scholars</a>
@@ -155,26 +170,39 @@
     </div>
     <img src="joy.png" alt="The Joy of x Book">
   </section>
+
   <section class="main-section">
-  <img src="truth.png" alt="The Truth Detective Book">
-  <div class="description">
-    <h2>The Truth Detective</h2>
-    <p>
-      In a world overflowing with information and misinformation, Tim Harford empowers us to cut through noise and confusion.  
-      This book is a guide for anyone seeking clarity, facts, and rational thinking in today’s complex landscape.
-    </p>
-  </div>
-</section>
+    <img src="truth.png" alt="The Truth Detective Book">
+    <div class="description">
+      <h2>The Truth Detective</h2>
+      <p>
+        Tim Harford masterfully shows how statistical thinking and data can help uncover truth in a world of misinformation. A must-read for those who want to think clearly and critically about the world.
+      </p>
+    </div>
+  </section>
 
   <footer>
     &copy; 2025 Knowledge Seeker. All rights reserved.
   </footer>
 
   <script>
+    const sidebar = document.getElementById('sidebar');
+    const closeBtn = document.getElementById('closeSidebar');
+
     function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('show-sidebar');
     }
+
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('show-sidebar');
+    });
+
+    const sidebarLinks = document.querySelectorAll('#sidebar a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('show-sidebar');
+      });
+    });
   </script>
 
 </body>
