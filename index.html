@@ -13,7 +13,7 @@
     }
 
     .hero {
-      background: linear-gradient(to right, #8e44ad, #c0392b);
+      background: linear-gradient(to right, #ff6f61, #d63384);
       color: white;
       text-align: center;
       padding: 100px 20px;
@@ -81,7 +81,7 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      z-index: 1100;
+      z-index: 1101;
     }
 
     .menu button {
@@ -90,6 +90,19 @@
       border: none;
       color: black;
       cursor: pointer;
+      z-index: 1101;
+      position: relative;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 1000;
     }
 
     .sidebar {
@@ -101,9 +114,9 @@
       background-color: #ffffff;
       color: #333;
       padding: 60px 20px 20px;
-      z-index: 1000;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
       transition: left 0.3s ease;
+      z-index: 1001;
     }
 
     .sidebar.show-sidebar {
@@ -140,6 +153,10 @@
       display: block;
     }
 
+    .sidebar-overlay.show {
+      display: block;
+    }
+
     @media (max-width: 768px) {
       .main-section {
         flex-direction: column;
@@ -154,6 +171,9 @@
 </head>
 <body>
 
+  <!-- Sidebar Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
   <!-- Menu Toggle Button -->
   <div class="menu">
     <button onclick="toggleSidebar()">☰</button>
@@ -162,9 +182,9 @@
   <!-- Sidebar -->
   <div id="sidebar" class="sidebar">
     <button class="close-btn" onclick="toggleSidebar()">✕</button>
-    <a href="#">📖 About Me</a>
-    <a href="#">📚 More Books</a>
-    <a href="#">🎓 Scholars</a>
+    <a href="#">About Me</a>
+    <a href="#">More Books</a>
+    <a href="#">Scholars</a>
   </div>
 
   <!-- Hero Section -->
@@ -216,7 +236,16 @@
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('show-sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      const isOpen = sidebar.classList.contains('show-sidebar');
+
+      if (isOpen) {
+        sidebar.classList.remove('show-sidebar');
+        overlay.classList.remove('show');
+      } else {
+        sidebar.classList.add('show-sidebar');
+        overlay.classList.add('show');
+      }
     }
 
     // Animate sections on scroll
