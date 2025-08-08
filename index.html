@@ -13,8 +13,8 @@
     }
 
     .hero {
-      background: linear-gradient(to right, #ff6f61, #d63384);
-      color: white;
+      background: linear-gradient(to right, #ffcccb, #ffe4e1);
+      color: black;
       text-align: center;
       padding: 100px 20px;
     }
@@ -105,10 +105,14 @@
       z-index: 1000;
     }
 
+    .sidebar-overlay.show {
+      display: block;
+    }
+
     .sidebar {
       position: fixed;
       top: 0;
-      left: -270px;
+      left: -100%;
       width: 250px;
       height: 100%;
       background-color: #ffffff;
@@ -150,10 +154,6 @@
     }
 
     .sidebar.show-sidebar .close-btn {
-      display: block;
-    }
-
-    .sidebar-overlay.show {
       display: block;
     }
 
